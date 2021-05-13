@@ -1,8 +1,35 @@
 const Socket = require("websocket").server
 const http = require("http")
+var fs = require('fs');
 
 // Can remove the callback
-const server = http.createServer((req, res) => {})
+const server = http.createServer((req, resp) => {
+    if (req.url === "/sender") {
+        fs.readFile("sender/index.html", (error,pgResp)=>{
+            if (error) {
+                resp.writeHead(404);
+                resp.write('Contents you are looking are Not Found');
+            } else {
+                resp.writeHead(200, { 'Content-Type': 'text/html' });
+                resp.write(pgResp);
+            }
+            resp.end();
+        });   
+    }
+    if (req.url === "/receiver") {
+        fs.readFile("receiver/index.html", (error,pgResp)=>{
+            if (error) {
+                resp.writeHead(404);
+                resp.write('Contents you are looking are Not Found');
+            } else {
+                resp.writeHead(200, { 'Content-Type': 'text/html' });
+                resp.write(pgResp);
+            }
+            resp.end();
+        });   
+    }
+    // res.end()
+})
 
 server.listen(3000, () => {
     console.log("Listening on port 3000...")
@@ -17,7 +44,7 @@ let users = []
 // When new person, request event is called.
 webSocket.on('request', (req) => {
     const connection = req.accept()
-
+    
     // When successfully connected. Message event is triggered. 
     connection.on('message', (message) => {
         const data = JSON.parse(message.utf8Data)
