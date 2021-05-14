@@ -1,6 +1,6 @@
 // Variables
 // URL with Socket
-const webSocket = new WebSocket("ws://13.235.27.162:3000")
+const webSocket = new WebSocket("wss://13.233.204.111:3000")
 var room_input;
 var local_stream_video;
 var rtc_peer_connection
