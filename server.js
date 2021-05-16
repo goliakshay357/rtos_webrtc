@@ -43,6 +43,7 @@ let users = []
 
 // When new person, request event is called.
 webSocket.on('request', (req) => {
+    console.log(req)
     const connection = req.accept()
     
     // When successfully connected. Message event is triggered. 
